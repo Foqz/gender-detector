@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GenderdetectorApplication {
+public class GenderDetectorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GenderdetectorApplication.class, args);
+		SpringApplication.run(GenderDetectorApplication.class, args);
 	}
 
 }
