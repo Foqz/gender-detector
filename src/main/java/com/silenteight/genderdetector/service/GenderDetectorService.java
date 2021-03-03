@@ -1,4 +1,4 @@
-package com.silenteight.genderdetector.controller;
+package com.silenteight.genderdetector.service;
 
 import com.silenteight.genderdetector.enumeration.AlgorithmVariant;
 import com.silenteight.genderdetector.enumeration.Gender;
