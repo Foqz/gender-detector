@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/gender-detector")
@@ -20,13 +20,13 @@ public class GenderDetectorController {
 
     private final GenderDetectorService genderDetectorService;
 
-    @GetMapping("/check-gender/{name}/{algorithm-variant}")
-    public ResponseEntity<Gender> checkGender(@PathVariable("name") String name, @PathVariable("algorithm-variant") AlgorithmVariant algorithmVariant) {
-        return ResponseEntity.status(HttpStatus.OK).body(genderDetectorService.checkGender(name, algorithmVariant));
+    @GetMapping("/by-name/{name}/{algorithm-variant}")
+    public ResponseEntity<Gender> getGenderByName(@PathVariable("name") String name, @PathVariable("algorithm-variant") AlgorithmVariant algorithmVariant) {
+        return ResponseEntity.status(HttpStatus.OK).body(genderDetectorService.getGenderByName(name, algorithmVariant));
     }
 
     @GetMapping("/available-names/{gender}")
-    public ResponseEntity<ArrayList<String>> getAvailableNames(@PathVariable Gender gender) {
-        return ResponseEntity.status(HttpStatus.OK).body(genderDetectorService.getAvailableNames(gender));
+    public ResponseEntity<Set<String>> getAvailableNames(@PathVariable Gender gender) {
+        return ResponseEntity.status(HttpStatus.OK).body(genderDetectorService.getAvailableNamesForGender(gender));
     }
 }
