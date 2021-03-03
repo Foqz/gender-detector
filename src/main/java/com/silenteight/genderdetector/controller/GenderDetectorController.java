@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class GenderDetectorController {
     }
 
     @GetMapping("/available-names/{gender}")
-    public ResponseEntity<List<String>> getAvailableNames(@PathVariable Gender gender) {
+    public ResponseEntity<ArrayList<String>> getAvailableNames(@PathVariable Gender gender) {
         return ResponseEntity.status(HttpStatus.OK).body(genderDetectorService.getAvailableNames(gender));
     }
 }
