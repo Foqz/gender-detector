@@ -1,5 +1,7 @@
 package com.silenteight.genderdetector.service;
 
+import com.silenteight.genderdetector.algorithmfactory.GenderDetectorAlgorithm;
+import com.silenteight.genderdetector.algorithmfactory.GenderDetectorAlgorithmFactory;
 import com.silenteight.genderdetector.enumeration.AlgorithmVariant;
 import com.silenteight.genderdetector.enumeration.Gender;
 import com.silenteight.genderdetector.exception.GenderDetectorException;
@@ -11,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -24,19 +27,28 @@ public class GenderDetectorAlgorithmService {
 
     public Gender detectGender(String name, AlgorithmVariant algorithmVariant) {
 
-        Set<String> maleNamesSet = getNamesForGender(Gender.MALE);
-        Set<String> femaleNamesSet = getNamesForGender(Gender.FEMALE);
+        GenderDetectorAlgorithmFactory factory = new GenderDetectorAlgorithmFactory();
+        GenderDetectorAlgorithm genderDetectorAlgorithm = factory
+                .getDetectorAlgorithmByVersion(GenderDetectorAlgorithmFactory.GENDER_DETECTOR_ALGORITHM_V01);
 
-        return Gender.MALE;
+        Set<String> maleNamesSet = getNamesForGender(Gender.MALE, true);
+        Set<String> femaleNamesSet = getNamesForGender(Gender.FEMALE, true);
+
+        return Objects.requireNonNull(genderDetectorAlgorithm).detectGender(name, algorithmVariant, maleNamesSet, femaleNamesSet);
+
     }
 
-    public Set<String> getNamesForGender(Gender gender) {
+    public Set<String> getNamesForGender(Gender gender, boolean isLowerCase) {
         Set<String> namesSetForGender = new HashSet<>();
         try (FileReader reader = new FileReader(getFilePathByGender(gender));
              BufferedReader bufferedReader = new BufferedReader((reader))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                namesSetForGender.add(line);
+                if (isLowerCase) {
+                    namesSetForGender.add(line.toLowerCase());
+                } else {
+                    namesSetForGender.add(line);
+                }
             }
         } catch (IOException e) {
             log.error("There was an exception during generating names list for gender", e);

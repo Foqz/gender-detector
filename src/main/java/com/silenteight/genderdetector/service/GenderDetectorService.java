@@ -20,6 +20,6 @@ public class GenderDetectorService {
     }
 
     public Set<String> getAvailableNamesForGender(Gender gender) {
-        return genderDetectorAlgorithmService.getNamesForGender(gender);
+        return genderDetectorAlgorithmService.getNamesForGender(gender, false);
     }
 }
