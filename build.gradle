@@ -19,13 +19,16 @@ repositories {
 }
 
 dependencies {
-    implementation(
+    implementation (
             'org.springframework.boot:spring-boot-starter-web',
             group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     )
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation (
+            'org.springframework.boot:spring-boot-starter-test',
+            group: 'junit', name: 'junit', version: '4.12'
+    )
 }
 
 test {

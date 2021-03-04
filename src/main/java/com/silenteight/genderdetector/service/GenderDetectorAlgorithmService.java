@@ -24,7 +24,6 @@ public class GenderDetectorAlgorithmService {
     private static final String FEMALE_NAMES_PATH = "src/main/resources/avaliabletokensfiles/female_names.txt";
     private static final String MALE_NAMES_PATH = "src/main/resources/avaliabletokensfiles/male_names.txt";
 
-
     public Gender detectGender(String name, AlgorithmVariant algorithmVariant) {
 
         GenderDetectorAlgorithmFactory factory = new GenderDetectorAlgorithmFactory();
@@ -35,7 +34,6 @@ public class GenderDetectorAlgorithmService {
         Set<String> femaleNamesSet = getNamesForGender(Gender.FEMALE, true);
 
         return Objects.requireNonNull(genderDetectorAlgorithm).detectGender(name, algorithmVariant, maleNamesSet, femaleNamesSet);
-
     }
 
     public Set<String> getNamesForGender(Gender gender, boolean isLowerCase) {

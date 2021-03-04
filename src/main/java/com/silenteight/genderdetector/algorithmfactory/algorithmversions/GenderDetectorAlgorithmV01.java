@@ -3,7 +3,7 @@ package com.silenteight.genderdetector.algorithmfactory.algorithmversions;
 import com.silenteight.genderdetector.algorithmfactory.GenderDetectorAlgorithm;
 import com.silenteight.genderdetector.enumeration.AlgorithmVariant;
 import com.silenteight.genderdetector.enumeration.Gender;
-import com.silenteight.genderdetector.exception.GenderDetectorException;
+import com.silenteight.genderdetector.exception.GenderDetectorAlgorithmException;
 
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class GenderDetectorAlgorithmV01 implements GenderDetectorAlgorithm {
                     splitNameArrayBasedOnVariant = splitNameArray;
                     break;
                 default:
-                    throw new GenderDetectorException("Could not find alhorithm variant for: " + algorithmVariant);
+                    throw new GenderDetectorAlgorithmException("Could not find algorithm variant for: " + algorithmVariant);
             }
 
             for (String namePart : splitNameArrayBasedOnVariant) {
@@ -38,7 +38,7 @@ public class GenderDetectorAlgorithmV01 implements GenderDetectorAlgorithm {
             }
 
             if (maleNameHits == 0 && femaleNameHits == 0) {
-                throw new GenderDetectorException("Could not find any matching name in data files");
+                throw new GenderDetectorAlgorithmException("Could not find any matching name in data files");
             } else if (maleNameHits == femaleNameHits) {
                 return Gender.INCONCLUSIVE;
             } else if (maleNameHits > femaleNameHits) {
@@ -47,7 +47,7 @@ public class GenderDetectorAlgorithmV01 implements GenderDetectorAlgorithm {
                 return Gender.FEMALE;
             }
         } else {
-            throw new GenderDetectorException("Name cannot be blank");
+            throw new GenderDetectorAlgorithmException("Name cannot be blank");
         }
     }
 }
