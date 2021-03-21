@@ -1,9 +1,19 @@
-# gender detector
+# Gender detector
 Project to determine a gender based on user's input.
 
-# build project
-build project with : gradlew build - it will create jar file under build/libs
+## Build project
+Build project with:
+```bash
+gradlew build
+```
+It will create jar file under build/libs.
 
-# docker image commands
-build docker image with : docker build -t genderdetectorimage .
-run image with : docker run -p 8080:8080 genderdetectorimage
+## Docker commands
+Build docker image with: 
+```bash
+docker build -t genderdetectorimage
+```
+Run image with:
+```bash
+docker run -p 8080:8080 genderdetectorimage
+```
