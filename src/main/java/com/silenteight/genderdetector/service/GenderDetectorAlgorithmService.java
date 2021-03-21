@@ -30,23 +30,33 @@ public class GenderDetectorAlgorithmService {
         GenderDetectorAlgorithm genderDetectorAlgorithm = factory
                 .getDetectorAlgorithmByVersion(GenderDetectorAlgorithmFactory.GENDER_DETECTOR_ALGORITHM_V01);
 
-        Set<String> maleNamesSet = getNamesForGender(Gender.MALE, true);
-        Set<String> femaleNamesSet = getNamesForGender(Gender.FEMALE, true);
+        Set<String> maleNamesSet = getNamesForGenderLowerCase(Gender.MALE);
+        Set<String> femaleNamesSet = getNamesForGenderLowerCase(Gender.FEMALE);
 
         return Objects.requireNonNull(genderDetectorAlgorithm).detectGender(name, algorithmVariant, maleNamesSet, femaleNamesSet);
     }
 
-    public Set<String> getNamesForGender(Gender gender, boolean isLowerCase) {
+    public Set<String> getNamesForGenderOriginalCase(Gender gender) {
         Set<String> namesSetForGender = new HashSet<>();
         try (FileReader reader = new FileReader(getFilePathByGender(gender));
              BufferedReader bufferedReader = new BufferedReader((reader))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                if (isLowerCase) {
-                    namesSetForGender.add(line.toLowerCase());
-                } else {
-                    namesSetForGender.add(line);
-                }
+                namesSetForGender.add(line);
+            }
+        } catch (IOException e) {
+            log.error("There was an exception during generating names list for gender", e);
+        }
+        return namesSetForGender;
+    }
+
+    public Set<String> getNamesForGenderLowerCase(Gender gender) {
+        Set<String> namesSetForGender = new HashSet<>();
+        try (FileReader reader = new FileReader(getFilePathByGender(gender));
+             BufferedReader bufferedReader = new BufferedReader((reader))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                namesSetForGender.add(line.toLowerCase());
             }
         } catch (IOException e) {
             log.error("There was an exception during generating names list for gender", e);
